@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/screen/home.dart';
+import 'package:flutter_todo_list/screen/page_slider.dart';
 
 void main() {
   // hive
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Todo App',
       theme: ThemeData(primaryColor: Colors.amber),
       routes: {
-        "/": (context) => Home(),
+        "/": (context) => const PageSlider(),
         // "/add": (context) => Add()
         // "/modify": (context) => Modify()
       },
