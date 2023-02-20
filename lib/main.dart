@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/screen/home.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // hive
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +14,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo App',
       theme: ThemeData(primaryColor: Colors.amber),
-      home: Home(),
+      routes: {
+        "/": (context) => Home(),
+        // "/add": (context) => Add()
+        // "/modify": (context) => Modify()
+      },
+      initialRoute: "/",
     );
   }
 }
