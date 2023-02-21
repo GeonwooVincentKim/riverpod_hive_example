@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/screen/discover.dart';
+import 'package:flutter_todo_list/screen/complete.dart';
 import 'package:flutter_todo_list/screen/home.dart';
 import 'package:flutter_todo_list/widget/indicator_bottom_navigation_bar.dart';
 
@@ -33,13 +33,37 @@ class _PageSliderState extends State<PageSlider> with SingleTickerProviderStateM
         title: const Text("TO.DO", style: TextStyle(color: Colors.white54)),
       ),
       body: TabBarView(
-        children: [
-          Home(),
-          Discover(),
-        ],
         controller: _tabController,
+        children: const [
+          Home(),
+          Complete(),
+        ],
       ),
       bottomNavigationBar: IndicatorBottomNavigationBar(tabController: _tabController),
+      floatingActionButton: SizedBox(
+        height: 60,
+        width: 60,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Ink(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black54, width: 3.0),
+              shape: BoxShape.circle
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(500.0), 
+              onTap: () {
+                Navigator.pushNamed(context, "/add");
+              },
+              child: const Icon(
+                Icons.add,
+                color: Colors.black54,
+                size: 50
+              ),
+            ),
+          )
+        )
+      ),
     );
   }
 }

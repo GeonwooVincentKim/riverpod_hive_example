@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_list/screen/add.dart';
+import 'package:flutter_todo_list/screen/complete.dart';
+import 'package:flutter_todo_list/screen/modify.dart';
 import 'package:flutter_todo_list/screen/page_slider.dart';
 
 void main() {
@@ -16,8 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.amber),
       routes: {
         "/": (context) => const PageSlider(),
-        // "/add": (context) => Add()
-        // "/modify": (context) => Modify()
+        "/complete": (context) => const Complete(),
+        "/add": (context) => const Add(),
+        "/modify": (context) => const Modify()
       },
       initialRoute: "/",
     );
