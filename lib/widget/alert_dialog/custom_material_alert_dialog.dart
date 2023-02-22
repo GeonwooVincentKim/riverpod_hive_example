@@ -10,84 +10,45 @@ class CustomMaterialAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Dialog(
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.circular(16),
-    //   ),
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       centerTitle: true,
-    //       backgroundColor: Colors.blue,
-    //       elevation: 0,
-    //       leading: IconButton(
-    //         icon: Icon(Icons.arrow_back),
-    //         onPressed: () => Navigator.pop(context),
-    //       ),
-    //       title: Text("Hi")
-    //     ),
-    //     body: SingleChildScrollView(
-    //       child: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         crossAxisAlignment: CrossAxisAlignment.stretch,
-    //         children: [
-    //           Padding(
-    //             padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
-    //             child: Text("Contetns")
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   )
-    // );
-    return AlertDialog(
-      actionsAlignment: MainAxisAlignment.center,
-      title: SizedBox(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.14),
-            Text("Hi", textAlign: TextAlign.left,)
-          ],
-        ),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
-      // title:  Text("Hi", textAlign: TextAlign.center,),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: [
-            // Row(
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: [
-            //     IconButton(
-            //       icon: Icon(Icons.arrow_back_ios),
-            //       onPressed: () {
-            //         Navigator.of(context).pop();
-            //       },
-            //     ),  
-            //     // Text("Title"),
-            //   ],
-            // ),
-            Text("Alert Dialog"),
-            Text("Alert Dialog"),
-
-            isAdd ? Text("IsAdd") : Text("IsModify")
-          ],
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text("Hi")
         ),
-      ),
-      actions: [
-        TextButton(
-          child: const Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        )
-      ],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("일자"),
+                        TextField(
+                          // cont
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
     );
   }
 }
