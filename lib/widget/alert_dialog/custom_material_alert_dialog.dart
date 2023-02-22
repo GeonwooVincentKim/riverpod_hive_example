@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart';
+import 'package:intl/intl.dart';
 
-class CustomMaterialAlertDialog extends StatelessWidget {
+class CustomMaterialAlertDialog extends StatefulWidget {
   final bool isAdd;
 
   const CustomMaterialAlertDialog({
     super.key,
     required this.isAdd
   });
+
+  @override
+  State<CustomMaterialAlertDialog> createState() => _CustomMaterialAlertDialogState();
+}
+
+class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController titleInput = TextEditingController();
+  TextEditingController contentsInput = TextEditingController();
+  
+  @override
+  void initState() {
+    dateInput.text = "";
+    titleInput.text = "";
+    contentsInput.text = "";
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +54,44 @@ class CustomMaterialAlertDialog extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text("일자"),
-                        TextField(
-                          // cont
-                        )
-                      ],
-                    )
+                    CustomTextFormField(
+                      labelTitleText: "일자",
+                      controller: dateInput,
+                      labelText: "날짜를 입력하세요",
+                      onTap: () async {
+                        DateTime? pickedDate = await customDatePicker(context);
+                        
+                        print(pickedDate);
+                        String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
+                        print(formattedDate);
+                  
+                        setState(() {
+                          dateInput.text = formattedDate;
+                        });
+                      },
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                    CustomTextFormField(
+                      labelTitleText: "제목",
+                      controller: titleInput,
+                      labelText: "제목을 입력하세요",
+                      onTap: () async {
+                        Text(titleInput.text);
+                      }
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                    CustomTextFormField(
+                      labelTitleText: "내용",
+                      controller: contentsInput,
+                      labelText: "내용을 입력하세요",
+                      onTap: () async {
+                        if (contentsInput.text == "" || contentsInput.text.isEmpty) {
+                          print("No Input");
+                        } else {
+                          Text(contentsInput.text);
+                        }
+                      }
+                    ),
                   ],
                 ),
               ),
@@ -49,6 +99,15 @@ class CustomMaterialAlertDialog extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+
+  Future<DateTime?> customDatePicker(BuildContext context) {
+    return showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101)
     );
   }
 }
