@@ -15,15 +15,17 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: TodoTile(widget: widget),
-                );
-              }, 
+            child: Card(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: TodoTile(widget: widget),
+                  );
+                },
+              ),
             )
           )
         ],
