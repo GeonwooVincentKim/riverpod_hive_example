@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const PageSlider(),
         "/complete": (context) => const Complete(),
         "/add": (context) => const Add(),
+        // "/add": (context) => (isAdd: true),
         "/modify": (context) => const Modify()
       },
       initialRoute: "/",
