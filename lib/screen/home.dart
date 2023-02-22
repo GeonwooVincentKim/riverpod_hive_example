@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_list/widget/list_view/todo_tile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,34 +13,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Row(
+        child: Column(
           children: [
             Expanded(
-              child: Checkbox(
-                key: widget.key,
-                value: false,
-                onChanged: (checked) {
-                  
-                },
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Testing"),
-                Text("Testing"),
-              ]
-            ),
-            Expanded(
-              child: IconButton(
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.amber,
-                ),
-                onPressed: () {
-                  
-                },
-              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return TodoTile(widget: widget);
+                }, 
+              )
             )
           ],
         )
