@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/screen/complete.dart';
 import 'package:flutter_todo_list/screen/home.dart';
+import 'package:flutter_todo_list/widget/alert_dialog/custom_alert_dialog.dart';
+import 'package:flutter_todo_list/widget/alert_dialog/custom_material_alert_dialog.dart';
 import 'package:flutter_todo_list/widget/indicator_bottom_navigation_bar.dart';
 
 class PageSlider extends StatefulWidget {
@@ -53,7 +55,27 @@ class _PageSliderState extends State<PageSlider> with SingleTickerProviderStateM
             child: InkWell(
               borderRadius: BorderRadius.circular(500.0), 
               onTap: () {
-                Navigator.pushNamed(context, "/add");
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomMaterialAlertDialog(isAdd: true);
+                  }
+                );
+                // showDialog(context: context, builder: (BuildContext context) {
+                //   return AlertDialog(
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(10)
+                //     ),
+                //     title: Column(
+                //       children: [
+
+                //       ],
+                //     )
+                //   );
+                // });
+                // CustomAlertDialog(title: Text("Test"), content: Text("Content"), actions: []);
+
+                // Navigator.pushNamed(context, "/add");
               },
               child: const Icon(
                 Icons.add,

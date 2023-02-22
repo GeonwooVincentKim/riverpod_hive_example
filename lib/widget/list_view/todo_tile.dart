@@ -11,35 +11,52 @@ class TodoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Checkbox(
-            key: widget.key,
-            value: false,
-            onChanged: (checked) {
-              
-            },
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Testing"),
-              Text("Testing"),
-            ]
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.amber,
+    return Material(
+      color: Colors.blueAccent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Checkbox(
+                key: widget.key,
+                value: false,
+                onChanged: (checked) {
+                  
+                },
+              ),
             ),
-            onPressed: () {
-              
-            },
-          )
-        ],
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("Testing"),
+                Text("Testing"),
+              ]
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.amber,
+                ),
+                onPressed: () {
+                  
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
