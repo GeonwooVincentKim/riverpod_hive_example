@@ -11,15 +11,33 @@ class CustomMaterialAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
+      title: Row(
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          Text("Hi", textAlign: TextAlign.center,),
+        ],
+      ),
       content: SingleChildScrollView(
         child: ListBody(
           children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+            // Row(
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     IconButton(
+            //       icon: Icon(Icons.arrow_back_ios),
+            //       onPressed: () {
+            //         Navigator.of(context).pop();
+            //       },
+            //     ),  
+            //     // Text("Title"),
+            //   ],
+            // ),
             Text("Alert Dialog"),
             Text("Alert Dialog"),
 
