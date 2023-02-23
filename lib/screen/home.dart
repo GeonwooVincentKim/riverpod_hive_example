@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_list/data/model/todo.dart';
+import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/widget/list_view/todo_tile.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,6 +12,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Todo> items = [];
+
+  @override
+  void initState() {
+    setState(() {
+      items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +32,22 @@ class _HomeState extends State<Home> {
             child: Card(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: 10,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TodoTile(widget: widget),
+                    child: TodoTile(
+                      itemIndex: index,
+                      // Should I block this onDeleted part??
+                      // Or I should block onDeleted inside the
+                      // TodoTile.dart file?
+                      onDeleted: () {
+                        setState(() {
+                          items.removeAt(index);
+                        });
+                      },
+                      todo: items[index],
+                    ),
                   );
                 },
               ),
