@@ -26,7 +26,11 @@ class _FormScreenState extends State<FormScreen> {
           children: [
             renderTextFormField(
               label: '이름',
-              onSaved: (val) {},
+              onSaved: (val) {
+                setState(() {
+                  name = val;
+                });
+              },
               validator: (val) {
                 if(val == null) {
                   return '이름은 필수사항입니다.';
@@ -36,12 +40,12 @@ class _FormScreenState extends State<FormScreen> {
                   return '이름은 두글자 이상 입력 해주셔야합니다.';
                 }
 
-                return null;
               },
             ),
             renderTextFormField(
               label: '이메일',
               onSaved: (val) {
+                email = val;
               },
               validator: (val) {
                 if(val.length < 1) {
@@ -54,12 +58,13 @@ class _FormScreenState extends State<FormScreen> {
                   return '잘못된 이메일 형식입니다.';
                 }
 
-                return null;
               },
             ),
             renderTextFormField(
               label: '비밀번호',
-              onSaved: (val) {},
+              onSaved: (val) {
+                password = val;
+              },
               validator: (val) {
                 if(val.length < 1) {
                   return '비밀번호는 필수사항입니다.';
@@ -68,22 +73,24 @@ class _FormScreenState extends State<FormScreen> {
                 if(val.length < 8){
                   return '8자 이상 입력해주세요!';
                 }
-                return null;
               },
             ),
             renderTextFormField(
               label: '주소',
-              onSaved: (val) {},
+              onSaved: (val) {
+                address = val;
+              },
               validator: (val) {
                 if(val.length < 1) {
                   return '주소는 필수사항입니다.';
                 }
-                return null;
               },
             ),
             renderTextFormField(
               label: '닉네임',
-              onSaved: (val) {},
+              onSaved: (val) {
+                nickname = val;
+              },
               validator: (val) {
                 if(val.length < 1) {
                   return '닉네임은 필수사항입니다.';
@@ -91,11 +98,11 @@ class _FormScreenState extends State<FormScreen> {
                 if(val.length < 8) {
                   return '닉네임은 8자 이상 입력해주세요!';
                 }
-                return null;
               },
             ),
             
             renderButton(),
+            renderValues()
           ],
         ),
       ),
@@ -103,8 +110,12 @@ class _FormScreenState extends State<FormScreen> {
   }
 
    renderValues(){
+    print(name);
+    print(email);
+
     return Column(
       children: [
+
         Text(
           'name: $name'
         ),
@@ -148,10 +159,12 @@ class _FormScreenState extends State<FormScreen> {
   renderTextFormField({
     required String label,
     required FormFieldSetter onSaved,
+    // required TextEditingController controller,
     required FormFieldValidator validator,
   }) {
     assert(onSaved != null);
     assert(validator != null);
+    // assert(controller != null);
 
     return Column(
       children: [
@@ -168,6 +181,7 @@ class _FormScreenState extends State<FormScreen> {
         ),
         TextFormField(
           onSaved: onSaved,
+          // controller: controller,
           validator: validator,
         ),
         Container(height: 16.0),
