@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/state_management/todo_riverpod.dart';
 
 class CustomMaterialAlertDialog extends StatefulWidget {
   final bool isAdd;
@@ -20,11 +23,18 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
   TextEditingController titleInput = TextEditingController();
   TextEditingController contentsInput = TextEditingController();
   
+  List<Todo> items = [];
+  late Todo todoItem;
+
   @override
   void initState() {
     dateInput.text = "";
     titleInput.text = "";
     contentsInput.text = "";
+
+    setState(() {
+      items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+    });
 
     super.initState();
   }
@@ -65,10 +75,20 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                         print(pickedDate);
                         String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
                         print(formattedDate);
-                  
+
+                        // todoItem = Todo(
+                        //   title: titleInput.text,
+                        //   contents: contentsInput.text,
+                        //   date: dateInput.text,
+                        //   isDone: false
+                        // );
                         setState(() {
                           dateInput.text = formattedDate;
                         });
+                        // Navigator.of(context).pop();
+                        // setState(() {
+                        //   dateInput.text = formattedDate;
+                        // });
                       },
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
@@ -101,6 +121,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
         ),
       )
     );
+
+
   }
 
   Future<DateTime?> customDatePicker(BuildContext context) {
