@@ -27,7 +27,7 @@ class CustomTextFormField extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width * 0.5,
           child: TextFormField(
-            // controller: controller,
+            controller: controller,
             decoration: InputDecoration(
               labelText: labelText,
               border: const OutlineInputBorder()
