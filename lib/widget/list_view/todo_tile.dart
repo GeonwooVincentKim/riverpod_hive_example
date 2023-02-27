@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/screen/home.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/custom_material_alert_dialog.dart';
 
-class TodoTile extends StatelessWidget {
-  const TodoTile({
+class TodoTile extends StatefulWidget {
+  final int itemIndex;
+  final Function onDeleted;
+  final Todo todo;
+
+  TodoTile({
     super.key,
-    required this.widget,
+    required this.itemIndex,
+    required this.onDeleted,
+    required this.todo
   });
 
-  final Home widget;
+  @override
+  State<TodoTile> createState() => _TodoTileState();
+}
 
+class _TodoTileState extends State<TodoTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -39,9 +49,11 @@ class TodoTile extends StatelessWidget {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text("Testing"),
-                  Text("Testing"),
+                children: [
+                  Text(widget.todo.title),
+                  Text(widget.todo.contents),
+                  // Text(widget.item.title),
+                  // Text(widget.item.contents)
                 ]
               ),
               Container(
