@@ -24,19 +24,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late TextEditingController controller;
+  late TextEditingController nameController;
+  late TextEditingController ageController;
+
   String name = '';
+  int age = 0;
 
   @override
   void initState() {
     super.initState();
 
-    controller = TextEditingController();
+    nameController = TextEditingController();
+    ageController = TextEditingController();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    nameController.dispose();
+    ageController.dispose();
     super.dispose();
   }
 
@@ -61,6 +66,20 @@ class _HomeState extends State<Home> {
               ],
             ),
             const SizedBox(height: 16),
+            Row(
+              children: [
+                const Expanded(
+                  child: Text(
+                    "Age : ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)
+                  )
+                ),
+                const SizedBox(width: 12),
+                Text(age.toString(), style: const TextStyle(fontSize: 20))
+              ],
+            ),
+            const SizedBox(height: 16),
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
@@ -70,8 +89,9 @@ class _HomeState extends State<Home> {
                 final name = await openDialog();
                 if (name == null || name.isEmpty) return;
 
-
-                setState(() => this.name = name);
+                setState(() {
+                  this.name = name;
+                });
               },
             ),
           ],
@@ -84,10 +104,21 @@ class _HomeState extends State<Home> {
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Your Name'),
-      content: TextField(
-        autofocus: true,
-        decoration: const InputDecoration(hintText: 'Enter your name'),
-        controller: controller,
+      content: Column(
+        children: [
+          TextField(
+            autofocus: true,
+            decoration: const InputDecoration(hintText: 'Enter your name'),
+            controller: nameController,
+          ),
+          const SizedBox(height: 15),
+          TextField(
+            autofocus: true,
+            decoration: const InputDecoration(hintText: 'Enter your name'),
+            controller: ageController,
+            keyboardType: TextInputType.number,
+          ),
+        ],
       ),
       actions: [
         TextButton(
@@ -99,6 +130,6 @@ class _HomeState extends State<Home> {
   );
 
   void submit() {
-    Navigator.of(context).pop(controller.text);
+    Navigator.of(context).pop(nameController.text);
   }
 }
