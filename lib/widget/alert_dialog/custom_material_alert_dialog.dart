@@ -23,8 +23,15 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
   TextEditingController titleInput = TextEditingController();
   TextEditingController contentsInput = TextEditingController();
   
-  List<Todo> items = [];
-  late Todo todoItem;
+  // List<Todo> items = [];
+  // late Todo todoItem;
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> newTodo = {
+    'title': '',
+    'contents': '',
+    'date': '',
+    'isDone': false
+  };
 
   @override
   void initState() {
@@ -33,8 +40,16 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     contentsInput.text = "";
 
     setState(() {
-      items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+      // print(todoItem);
+      // todoItem = Provider.of<TodoRiverPod>(context, listen: false).selectedTodo!;
+      // items = Provider.of<TodoRiverPod>(context, listen: false).todo;
     });
+
+    // if (todoItem == null) {
+    //   print("passing");
+    //   final List<Todo> listTodo = Provider.of<TodoRiverPod>(context, listen: false).todo.toList();
+    //   todoItem = listTodo.firstWhere((element) => element.id == widget.)
+    // }
 
     super.initState();
   }
@@ -51,78 +66,107 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
           backgroundColor: Colors.blue,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text("Hi")
+          title: const Text("Hi")
         ),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
-                child: Column(
-                  children: [
-                    CustomTextFormField(
-                      labelTitleText: "일자",
-                      controller: dateInput,
-                      labelText: "날짜를 입력하세요",
-                      onTap: () async {
-                        DateTime? pickedDate = await customDatePicker(context);
-                        
-                        print(pickedDate);
-                        String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
-                        print(formattedDate);
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
+                  child: Column(
+                    children: [
+                      CustomTextFormField(
+                        labelTitleText: "일자",
+                        controller: dateInput,
+                        labelText: "날짜를 입력하세요",
+                        onTap: () async {
+                          DateTime? pickedDate = await customDatePicker(context);
+                          
+                          // print("$todoItem <- Todo Item");
+                          print(pickedDate);
+                          String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
+                          print(formattedDate);
+          
+                          dateInput.text = formattedDate;
+                        },
+                        onSaved: (val) {
+                          newTodo['date'] = val;
+                        },
+                        validator: (val) {},
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      CustomTextFormField(
+                        labelTitleText: "제목",
+                        controller: titleInput,
+                        labelText: "제목을 입력하세요",
+                        onTap: () {
+                          // Text(titleInput.text);
+                        },
+                        onSaved: (val) {
+                          newTodo['title'] = val;
+                        },
+                        validator: (val) {},
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      CustomTextFormField(
+                        labelTitleText: "내용",
+                        controller: contentsInput,
+                        labelText: "내용을 입력하세요",
+                        onTap: () async {
+                          if (contentsInput.text == "" || contentsInput.text.isEmpty) {
+                            print("No Input");
+                          } else {
+                            Text(contentsInput.text);
+                          }
+                        },
+                        onSaved: (val) {
+                          newTodo['contents'] = val;
+                        },
+                        validator: (val) {},
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: Text("Cancel"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ElevatedButton(
+                      child: Text("Save"),
+                      onPressed: () {
+                        submit();
                         // todoItem = Todo(
                         //   title: titleInput.text,
                         //   contents: contentsInput.text,
                         //   date: dateInput.text,
                         //   isDone: false
                         // );
-                        setState(() {
-                          dateInput.text = formattedDate;
-                        });
-                        // Navigator.of(context).pop();
-                        // setState(() {
-                        //   dateInput.text = formattedDate;
-                        // });
+                        // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
+                        // items.add(todoItem);
                       },
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                    CustomTextFormField(
-                      labelTitleText: "제목",
-                      controller: titleInput,
-                      labelText: "제목을 입력하세요",
-                      onTap: () async {
-                        Text(titleInput.text);
-                      }
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                    CustomTextFormField(
-                      labelTitleText: "내용",
-                      controller: contentsInput,
-                      labelText: "내용을 입력하세요",
-                      onTap: () async {
-                        if (contentsInput.text == "" || contentsInput.text.isEmpty) {
-                          print("No Input");
-                        } else {
-                          Text(contentsInput.text);
-                        }
-                      }
-                    ),
+                    )
                   ],
-                ),
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ),
       )
     );
-
-
   }
 
   Future<DateTime?> customDatePicker(BuildContext context) {
@@ -132,5 +176,15 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       firstDate: DateTime(1900),
       lastDate: DateTime(2101)
     );
+  }
+
+  void submit() {
+    if (!_formKey.currentState!.validate()) return;
+
+    _formKey.currentState!.save();
+    Provider.of<TodoRiverPod>(context, listen: false).createTodo(newTodo);
+    Navigator.pushNamed(context, "/");
+    // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
+
   }
 }
