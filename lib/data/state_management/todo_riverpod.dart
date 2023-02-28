@@ -20,6 +20,11 @@ class TodoRiverPod with ChangeNotifier {
     _todoItems.add(todoSettings);
     notifyListeners();
   }
+  
+  void deleteTodo(Map<String, dynamic> menuCreate) {
+    _todoItems.removeWhere((item) => item.id == menuCreate['id']);
+    notifyListeners();
+  }
 
   void addTodo(Todo todo) {
     _todoItems.add(todo);
