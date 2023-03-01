@@ -17,16 +17,16 @@ class PageSlider extends StatefulWidget {
 
 class _PageSliderState extends State<PageSlider> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<Todo> items = [];
+  // List<Todo> items = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     
-    setState(() {
-      items = Provider.of<TodoRiverPod>(context, listen: false).todo;
-    });
+    // setState(() {
+    //   items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+    // });
   }
 
   @override

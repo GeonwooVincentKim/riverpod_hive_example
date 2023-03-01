@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   void initState() {
     setState(() {
       items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+      print("Is here??");
     });
 
     super.initState();
@@ -42,8 +43,10 @@ class _HomeState extends State<Home> {
                       // Or I should block onDeleted inside the
                       // TodoTile.dart file?
                       onDeleted: () {
+                        print("Checked click");
                         setState(() {
-                          items.removeAt(index);
+                          // items.removeAt(index);
+                          Provider.of<TodoRiverPod>(context, listen: false).dropTodo(items[index]);
                         });
                       },
                       todo: items[index],

@@ -30,4 +30,9 @@ class TodoRiverPod with ChangeNotifier {
     _todoItems.add(todo);
     notifyListeners();
   }
+
+  void dropTodo(Todo todo) {
+    _todoItems.remove(todo);
+    notifyListeners();
+  }
 }
