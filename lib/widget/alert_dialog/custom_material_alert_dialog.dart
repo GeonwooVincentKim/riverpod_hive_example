@@ -81,50 +81,20 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                   child: Column(
-                    children: [
-                      CustomTextFormField(
-                        labelTitleText: "일자",
-                        controller: dateInput,
-                        labelText: "날짜를 입력하세요",
-                        onTap: () async {
-                          DateTime? pickedDate = await customDatePicker(context);
-                          String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
-                          print(formattedDate);
-          
-                          dateInput.text = formattedDate;
-                        },
-                        onSaved: (val) {
-                          newTodo['date'] = val;
-                        },
-                        validator: (val) {},
-                      ),
+                    children: widget.isAdd == true ? [
+                      _buildDate(context),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      CustomTextFormField(
-                        labelTitleText: "제목",
-                        controller: titleInput,
-                        labelText: "제목을 입력하세요",
-                        onTap: () {},
-                        onSaved: (val) {
-                          newTodo['title'] = val;
-                        },
-                        validator: (val) {
-                          if (val == null || val.isEmpty) {
-                            return "제목은 필수로 입력하셔야 합니다";
-                          }
-                          return null;
-                        },
-                      ),
+                      _buildTitle(),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      CustomTextFormField(
-                        labelTitleText: "내용",
-                        controller: contentsInput,
-                        labelText: "내용을 입력하세요",
-                        onTap: () {},
-                        onSaved: (val) {
-                          newTodo['contents'] = val;
-                        },
-                        validator: (val) {},
-                      ),
+                      _buildContents(contentsInput: contentsInput, newTodo: newTodo),
+                    ] : [
+                       _buildDate(context),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      _buildTitle(),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      _buildTitle(),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      _buildContents(contentsInput: contentsInput, newTodo: newTodo),
                     ],
                   ),
                 ),
@@ -141,17 +111,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                     ),
                     ElevatedButton(
                       child: Text("Save"),
-                      onPressed: () {
-                        submit();
-                        // todoItem = Todo(
-                        //   title: titleInput.text,
-                        //   contents: contentsInput.text,
-                        //   date: dateInput.text,
-                        //   isDone: false
-                        // );
-                        // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
-                        // items.add(todoItem);
-                      },
+                      onPressed: () => submit()
                     )
                   ],
                 )
@@ -160,6 +120,45 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
           ),
         ),
       )
+    );
+  }
+
+  CustomTextFormField _buildDate(BuildContext context) {
+    return CustomTextFormField(
+      labelTitleText: "일자",
+      controller: dateInput,
+      labelText: "날짜를 입력하세요",
+      onTap: () async {
+        DateTime? pickedDate = await customDatePicker(context);
+        String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
+        print(formattedDate);
+
+        dateInput.text = formattedDate;
+      },
+      onSaved: (val) {
+        newTodo['date'] = val;
+      },
+      validator: (val) {
+        return null;
+      },
+    );
+  }
+
+  CustomTextFormField _buildTitle() {
+    return CustomTextFormField(
+      labelTitleText: "제목",
+      controller: titleInput,
+      labelText: "제목을 입력하세요",
+      onTap: () {},
+      onSaved: (val) {
+        newTodo['title'] = val;
+      },
+      validator: (val) {
+        if (val == null || val.isEmpty) {
+          return "제목은 필수로 입력하셔야 합니다";
+        }
+        return null;
+      },
     );
   }
 
@@ -180,5 +179,30 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     Navigator.pushNamed(context, "/");
     // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
 
+  }
+}
+
+class _buildContents extends StatelessWidget {
+  const _buildContents({
+    super.key,
+    required this.contentsInput,
+    required this.newTodo,
+  });
+
+  final TextEditingController contentsInput;
+  final Map<String, dynamic> newTodo;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextFormField(
+      labelTitleText: "내용",
+      controller: contentsInput,
+      labelText: "내용을 입력하세요",
+      onTap: () {},
+      onSaved: (val) {
+        newTodo['contents'] = val;
+      },
+      validator: (val) {},
+    );
   }
 }

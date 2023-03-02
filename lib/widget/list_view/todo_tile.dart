@@ -29,7 +29,7 @@ class _TodoTileState extends State<TodoTile> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return CustomMaterialAlertDialog(isAdd: false);
+            return CustomMaterialAlertDialog(isAdd: true);
           }
         );
       },
