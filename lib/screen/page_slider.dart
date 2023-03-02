@@ -65,30 +65,9 @@ class _PageSliderState extends State<PageSlider> with SingleTickerProviderStateM
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return CustomMaterialAlertDialog(isAdd: true);
+                    return const CustomMaterialAlertDialog(isAdd: true);
                   }
                 );
-                
-                // if(todoItem != null) {
-                //   setState(() {
-                //     items.add(todoItem);
-                //   });
-                // }
-                // showDialog(context: context, builder: (BuildContext context) {
-                //   return AlertDialog(
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(10)
-                //     ),
-                //     title: Column(
-                //       children: [
-
-                //       ],
-                //     )
-                //   );
-                // });
-                // CustomAlertDialog(title: Text("Test"), content: Text("Content"), actions: []);
-
-                // Navigator.pushNamed(context, "/add");
               },
               child: const Icon(
                 Icons.add,
