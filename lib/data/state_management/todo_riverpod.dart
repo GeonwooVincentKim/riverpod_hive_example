@@ -21,18 +21,23 @@ class TodoRiverPod with ChangeNotifier {
     notifyListeners();
   }
   
-  void deleteTodo(Map<String, dynamic> menuCreate) {
-    _todoItems.removeWhere((item) => item.id == menuCreate['id']);
+  void deleteTodo(int index) {
+    _todoItems.removeAt(index);
     notifyListeners();
   }
+
+  // void deleteTodo(Map<String, dynamic> menuCreate) {
+  //   _todoItems.removeWhere((item) => item.id == menuCreate['id']);
+  //   notifyListeners();
+  // }
 
   void addTodo(Todo todo) {
     _todoItems.add(todo);
     notifyListeners();
   }
 
-  void dropTodo(Todo todo) {
-    _todoItems.remove(todo);
-    notifyListeners();
-  }
+  // void dropTodo(Todo todo) {
+  //   _todoItems.remove(todo);
+  //   notifyListeners();
+  // }
 }

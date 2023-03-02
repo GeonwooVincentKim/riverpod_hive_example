@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/data/model/todo.dart';
+import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/screen/home.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/custom_material_alert_dialog.dart';
+import 'package:provider/provider.dart';
 
 class TodoTile extends StatefulWidget {
   final int itemIndex;
@@ -38,26 +40,24 @@ class _TodoTileState extends State<TodoTile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                child: Checkbox(
-                  key: widget.key,
-                  value: false,
-                  onChanged: (checked) {
-                    
-                  },
-                ),
+              Checkbox(
+                key: widget.key,
+                value: widget.todo.isDone,
+                onChanged: (checked) {
+                  setState(() {
+                    widget.todo.isDone = checked ?? false;
+                  });
+                },
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(widget.todo.title),
                   Text(widget.todo.contents),
-                  // Text(widget.item.title),
-                  // Text(widget.item.contents)
                 ]
               ),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
@@ -66,9 +66,7 @@ class _TodoTileState extends State<TodoTile> {
                     Icons.delete,
                     color: Colors.amber,
                   ),
-                  onPressed: () {
-                    
-                  },
+                  onPressed: () => widget.onDeleted(),
                 ),
               )
             ],

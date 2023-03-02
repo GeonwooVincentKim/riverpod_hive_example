@@ -88,9 +88,6 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                         labelText: "날짜를 입력하세요",
                         onTap: () async {
                           DateTime? pickedDate = await customDatePicker(context);
-                          
-                          // print("$todoItem <- Todo Item");
-                          print(pickedDate);
                           String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate!);
                           print(formattedDate);
           
@@ -106,26 +103,23 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                         labelTitleText: "제목",
                         controller: titleInput,
                         labelText: "제목을 입력하세요",
-                        onTap: () {
-                          // Text(titleInput.text);
-                        },
+                        onTap: () {},
                         onSaved: (val) {
                           newTodo['title'] = val;
                         },
-                        validator: (val) {},
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return "제목은 필수로 입력하셔야 합니다";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                       CustomTextFormField(
                         labelTitleText: "내용",
                         controller: contentsInput,
                         labelText: "내용을 입력하세요",
-                        onTap: () async {
-                          if (contentsInput.text == "" || contentsInput.text.isEmpty) {
-                            print("No Input");
-                          } else {
-                            Text(contentsInput.text);
-                          }
-                        },
+                        onTap: () {},
                         onSaved: (val) {
                           newTodo['contents'] = val;
                         },
