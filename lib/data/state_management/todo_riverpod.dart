@@ -8,11 +8,12 @@ class TodoRiverPod with ChangeNotifier {
   final List<Todo> _todoList = [];
   // late Todo _selectedTodo;
   final Todo _selectedTodo = Todo(id: '', contents: '', date: '', isDone: false, title: '');
+  late Todo _selectSingleTodo;
 
   List<Todo> get todo => [..._todoItems];
   List<Todo> get todoList => [..._todoList];
   // Todo? get selectedTodo => Todo.from(_selectedTodo);
-  // Todo? get selectedTodo => _selectedTodo != null ? Todo.from(selectedTodo!) : null;
+  Todo? get selectedTodo => _selectSingleTodo != null ? Todo.from(_selectSingleTodo) : null;
 
   void createTodo(Map<String, dynamic> menuCreate) {
     menuCreate['id'] = getRandomString(2);
@@ -30,6 +31,11 @@ class TodoRiverPod with ChangeNotifier {
   //   _todoItems.removeWhere((item) => item.id == menuCreate['id']);
   //   notifyListeners();
   // }
+
+  void checkCompleted(bool isDone) {
+    selectedTodo!.isDone = isDone;
+    notifyListeners();
+  }
 
   void addTodo(Todo todo) {
     _todoItems.add(todo);

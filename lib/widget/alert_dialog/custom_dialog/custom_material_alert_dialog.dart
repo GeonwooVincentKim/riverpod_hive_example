@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/item_spacing/item_spacing.dart';
+import 'package:flutter_todo_list/widget/custom/custom_row.dart';
 import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController titleInput = TextEditingController();
   TextEditingController contentsInput = TextEditingController();
+
+  bool _isChecked = false;
   
   // List<Todo> items = [];
   // late Todo todoItem;
@@ -93,22 +96,14 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
 
                 widget.isAdd == true ? 
-                  _buildTitle() : Container(),
-                
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      child: Text("Cancel"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    ElevatedButton(
-                      child: Text("Save"),
-                      onPressed: () => submit()
-                    )
-                  ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
+                    child: _buildCheckbox()
+                  ) : Container(),
+                                  
+                CustomRow(
+                  onNoPressed: () => Navigator.of(context).pop(),
+                  onOkPressed: () => submit()
                 )
               ],
             ),
@@ -170,6 +165,19 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     );
   }
 
+  CheckboxListTile _buildCheckbox() {
+    return CheckboxListTile(
+      title: const Text("완료여부"),
+      value: _isChecked,
+      onChanged: (value) {
+        setState(() {
+          _isChecked = value!;
+          newTodo['isDone'] = _isChecked;
+        });
+      },
+    );
+  }
+
   Future<DateTime?> customDatePicker(BuildContext context) {
     return showDatePicker(
       context: context,
@@ -186,6 +194,5 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     Provider.of<TodoRiverPod>(context, listen: false).createTodo(newTodo);
     Navigator.pushNamed(context, "/");
     // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
-
   }
 }
