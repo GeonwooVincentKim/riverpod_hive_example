@@ -53,7 +53,7 @@ class _TodoTileState extends State<TodoTile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(widget.todo.title),
-                  Text(widget.todo.contents),
+                  Text(widget.todo.date),
                 ]
               ),
               Container(
