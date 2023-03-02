@@ -3,8 +3,7 @@ import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/screen/complete.dart';
 import 'package:flutter_todo_list/screen/home.dart';
-import 'package:flutter_todo_list/widget/alert_dialog/custom_alert_dialog.dart';
-import 'package:flutter_todo_list/widget/alert_dialog/custom_material_alert_dialog.dart';
+import 'package:flutter_todo_list/widget/alert_dialog/custom_dialog/custom_material_alert_dialog.dart';
 import 'package:flutter_todo_list/widget/indicator_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/data/model/todo.dart';
+import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
+import 'package:flutter_todo_list/widget/alert_dialog/item_spacing/item_spacing.dart';
 import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../../data/state_management/todo_riverpod.dart';
 
 class CustomMaterialAlertDialog extends StatefulWidget {
   final bool isAdd;
@@ -81,25 +81,20 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                   child: Column(
-                    children: widget.isAdd == true ? [
+                    children: [
                       _buildDate(context),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      const ListItemSpace(),
                       _buildTitle(),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      _buildContents(contentsInput: contentsInput, newTodo: newTodo),
-                    ] : [
-                       _buildDate(context),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      _buildTitle(),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      _buildTitle(),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                      _buildContents(contentsInput: contentsInput, newTodo: newTodo),
+                      const ListItemSpace(),
+                      _buildContents(),
                     ],
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
 
+                widget.isAdd == true ? 
+                  _buildTitle() : Container(),
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -162,6 +157,19 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     );
   }
 
+  CustomTextFormField _buildContents() {
+    return CustomTextFormField(
+      labelTitleText: "내용",
+      controller: contentsInput,
+      labelText: "내용을 입력하세요",
+      onTap: () {},
+      onSaved: (val) {
+        newTodo['contents'] = val;
+      },
+      validator: (val) {},
+    );
+  }
+
   Future<DateTime?> customDatePicker(BuildContext context) {
     return showDatePicker(
       context: context,
@@ -179,30 +187,5 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     Navigator.pushNamed(context, "/");
     // Provider.of<TodoRiverPod>(context, listen: false).addTodo(todoItem);
 
-  }
-}
-
-class _buildContents extends StatelessWidget {
-  const _buildContents({
-    super.key,
-    required this.contentsInput,
-    required this.newTodo,
-  });
-
-  final TextEditingController contentsInput;
-  final Map<String, dynamic> newTodo;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomTextFormField(
-      labelTitleText: "내용",
-      controller: contentsInput,
-      labelText: "내용을 입력하세요",
-      onTap: () {},
-      onSaved: (val) {
-        newTodo['contents'] = val;
-      },
-      validator: (val) {},
-    );
   }
 }
