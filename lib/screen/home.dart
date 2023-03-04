@@ -17,7 +17,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     setState(() {
-      items = Provider.of<TodoRiverPod>(context, listen: false).todo;
+      items = Provider.of<TodoRiverPod>(context, listen: false).todoList;
+      
+      for (int i = 0; i < items.length; i++) {
+        print("Get Items -> ${items[i].title}");
+      }
     });
 
     super.initState();
@@ -38,9 +42,15 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: TodoTile(
                       itemIndex: index,
+                      onChanged: () {
+                        setState(() {
+                          Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(items[index].isDone);
+                        });
+                      },
                       onDeleted: () {
                         setState(() {
                           items.removeAt(index);
+                          Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
                         });
                       },
                       todo: items[index],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Todo {
-  final String id;
-  final String title;
+  String id;
+  String title;
   String contents;
   String date;
   bool isDone;

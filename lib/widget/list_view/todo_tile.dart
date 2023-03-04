@@ -7,12 +7,14 @@ import 'package:provider/provider.dart';
 
 class TodoTile extends StatefulWidget {
   final int itemIndex;
+  final Function onChanged;
   final Function onDeleted;
   final Todo todo;
 
   TodoTile({
     super.key,
     required this.itemIndex,
+    required this.onChanged,
     required this.onDeleted,
     required this.todo
   });
@@ -43,11 +45,13 @@ class _TodoTileState extends State<TodoTile> {
               Checkbox(
                 key: widget.key,
                 value: widget.todo.isDone,
-                onChanged: (checked) {
-                  setState(() {
-                    widget.todo.isDone = checked ?? false;
-                  });
-                },
+                onChanged: widget.onChanged(),
+                // onChanged: (checked) {
+                //   setState(() {
+                //     widget.todo.isDone = checked ?? false;
+                //     Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(widget.todo.isDone);
+                //   });
+                // },
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
