@@ -3,6 +3,7 @@ import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/screen/home.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/custom_dialog/custom_material_alert_dialog.dart';
+import 'package:flutter_todo_list/widget/alert_dialog/custom_dialog/custom_material_alert_dialog_modify.dart';
 import 'package:provider/provider.dart';
 
 class TodoTile extends StatefulWidget {
@@ -28,10 +29,13 @@ class _TodoTileState extends State<TodoTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap:() {
+        print("Get ID ?? -> ${widget.todo.id}");
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return CustomMaterialAlertDialog(isAdd: true);
+            return CustomMaterialAlertDialogModify(getTodo: widget.todo);
+            // return CustomMaterialAlertDialog(isAdd: false);
           }
         );
       },
@@ -45,13 +49,13 @@ class _TodoTileState extends State<TodoTile> {
               Checkbox(
                 key: widget.key,
                 value: widget.todo.isDone,
-                onChanged: widget.onChanged(),
-                // onChanged: (checked) {
-                //   setState(() {
-                //     widget.todo.isDone = checked ?? false;
-                //     Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(widget.todo.isDone);
-                //   });
-                // },
+                // onChanged: widget.onChanged(),
+                onChanged: (checked) {
+                  setState(() {
+                    widget.todo.isDone = checked ?? false;
+                    // Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(widget.todo.isDone);
+                  });
+                },
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -65,7 +65,7 @@ class _PageSliderState extends State<PageSlider> with SingleTickerProviderStateM
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return const CustomMaterialAlertDialog(isAdd: false);
+                    return const CustomMaterialAlertDialog();
                   }
                 );
               },

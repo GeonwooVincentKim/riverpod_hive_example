@@ -8,7 +8,7 @@ class TodoRiverPod with ChangeNotifier {
   final List<Todo> _todoList = [];
   final List<Todo> _todoCompleteList = [];
   // late Todo _selectedTodo;
-  final Todo _selectedTodo = Todo(id: '', contents: '', date: '', isDone: false, title: '');
+  Todo _selectedTodo = Todo(id: '', contents: '', date: '', isDone: false, title: '');
   late Todo _selectSingleTodo;
 
   List<Todo> get todoDummyList => [..._todoItems];
@@ -29,7 +29,25 @@ class TodoRiverPod with ChangeNotifier {
     createTodo.id = getRandomString(2);
     final Todo todoSets = Todo.from(createTodo);
 
+    print("Get CreateTodo.id -> ${createTodo.id}");
+
     _todoList.add(todoSets);
+    notifyListeners();
+  }
+
+  void updateTodo(Todo updateTodo) {
+    final Todo todoUpdateSets = Todo.from(updateTodo);
+    final int index = _todoList.indexWhere((element) => element.id == todoUpdateSets.id);
+
+    print("Get ID -> ${todoUpdateSets.id}");
+    print("Get Index -> $index");
+
+
+    if (index >= 0) {
+      _selectedTodo = todoUpdateSets;
+      _todoList[index] = todoUpdateSets;
+    }
+
     notifyListeners();
   }
 

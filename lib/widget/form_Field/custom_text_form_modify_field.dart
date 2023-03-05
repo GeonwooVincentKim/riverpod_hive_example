@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormModifyField extends StatelessWidget {
   final String labelTitleText;
   final TextEditingController controller;
   final String labelText;
@@ -9,7 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?) validator;
   final String hintText;
 
-  const CustomTextFormField({
+  const CustomTextFormModifyField({
     super.key, 
     required this.labelTitleText,
     required this.controller, 
@@ -33,8 +33,7 @@ class CustomTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               labelText: labelText,
               border: const OutlineInputBorder(),
-              hintText: hintText,
-              floatingLabelBehavior: FloatingLabelBehavior.auto
+              hintText: hintText
             ),
             onTap: onTap,
             onSaved: onSaved,

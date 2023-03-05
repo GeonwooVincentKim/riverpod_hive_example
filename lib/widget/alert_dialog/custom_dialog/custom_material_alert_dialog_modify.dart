@@ -7,52 +7,41 @@ import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart'
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CustomMaterialAlertDialog extends StatefulWidget {
-  const CustomMaterialAlertDialog({
+class CustomMaterialAlertDialogModify extends StatefulWidget {
+  final Todo getTodo;
+
+  const CustomMaterialAlertDialogModify({
     super.key,
+    required this.getTodo
   });
 
   @override
-  State<CustomMaterialAlertDialog> createState() => _CustomMaterialAlertDialogState();
+  State<CustomMaterialAlertDialogModify> createState() => _CustomMaterialAlertDialogModifyState();
 }
 
-class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
+class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDialogModify> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController titleInput = TextEditingController();
   TextEditingController contentsInput = TextEditingController();
 
   bool _isChecked = false;
   
-  List<Todo> items = [];
-  // late Todo todoItem;
   final _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> newTodo = {
-    'title': '',
-    'contents': '',
-    'date': '',
-    'isDone': false
-  };
-
   Todo newInstanceTodo = Todo(id: '', title: '', contents: '', date: '', isDone: false);
-  // Todo modifyTodo = 
 
   @override
   void initState() {
-    dateInput.text = "";
-    titleInput.text = "";
-    contentsInput.text = "";
-
     setState(() {
-      // print(todoItem);
-      // todoItem = Provider.of<TodoRiverPod>(context, listen: false).selectedTodo!;
-      items = Provider.of<TodoRiverPod>(context, listen: false).todoList;
+      newInstanceTodo = Todo(id: widget.getTodo.id, title: titleInput.text, contents: contentsInput.text, date: dateInput.text, isDone: false);
+      // dateInput.text = "";
+      // titleInput.text = "";
+      // contentsInput.text = "";
+      dateInput = TextEditingController(text: widget.getTodo.date);
+      titleInput = TextEditingController(text: widget.getTodo.title);
+      contentsInput = TextEditingController(text: widget.getTodo.contents);
     });
-
-    // if (todoItem == null) {
-    //   print("passing");
-    //   final List<Todo> listTodo = Provider.of<TodoRiverPod>(context, listen: false).todo.toList();
-    //   todoItem = listTodo.firstWhere((element) => element.id == widget.)
-    // }
+    
+    print("Get Widget ID -> ${widget.getTodo.id}");
 
     super.initState();
   }
@@ -94,8 +83,11 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-
-                    
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
+                  child: _buildCheckbox()
+                ),
+                                  
                 CustomRow(
                   onNoPressed: () => Navigator.of(context).pop(),
                   onOkPressed: () => submit()
@@ -120,7 +112,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
 
         dateInput.text = formattedDate;
       },
-      hintText: "",
+      hintText: widget.getTodo.date,
       onSaved: (val) {
         // newTodo['date'] = val;
         newInstanceTodo.date = val!;
@@ -141,7 +133,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
         // newTodo['title'] = val;
         newInstanceTodo.title = val!;
       },
-      hintText: "",
+      hintText: widget.getTodo.title,
       validator: (val) {
         if (val == null || val.isEmpty) {
           return "제목은 필수로 입력하셔야 합니다";
@@ -163,8 +155,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
         // newTodo['contents'] = val;
         newInstanceTodo.contents = val!;
       },
-      hintText: "Hello",
-      // hintText: isAdd == true ? "" : newInstanceTodo.contents,
+      hintText: widget.getTodo.contents,
       validator: (val) {},
     );
   }
@@ -196,8 +187,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
-    Provider.of<TodoRiverPod>(context, listen: false).addTodo(newInstanceTodo);
-    // Provider.of<TodoRiverPod>(context, listen: false).createTodo(newTodo);
+    Provider.of<TodoRiverPod>(context, listen: false).updateTodo(newInstanceTodo);
     Navigator.pushNamed(context, "/");
   }
 }
