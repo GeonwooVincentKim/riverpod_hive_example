@@ -33,12 +33,15 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
   void initState() {
     setState(() {
       newInstanceTodo = Todo(id: widget.getTodo.id, title: titleInput.text, contents: contentsInput.text, date: dateInput.text, isDone: false);
-      // dateInput.text = "";
-      // titleInput.text = "";
-      // contentsInput.text = "";
-      dateInput = TextEditingController(text: widget.getTodo.date);
-      titleInput = TextEditingController(text: widget.getTodo.title);
-      contentsInput = TextEditingController(text: widget.getTodo.contents);
+      // Hide all data before the user click the area of textfield
+      dateInput.text = "";
+      titleInput.text = "";
+      contentsInput.text = "";
+
+      /// Show all data in edit page
+      // dateInput = TextEditingController(text: widget.getTodo.date);
+      // titleInput = TextEditingController(text: widget.getTodo.title);
+      // contentsInput = TextEditingController(text: widget.getTodo.contents);
     });
     
     print("Get Widget ID -> ${widget.getTodo.id}");

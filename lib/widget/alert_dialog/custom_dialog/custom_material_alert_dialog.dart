@@ -163,8 +163,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
         // newTodo['contents'] = val;
         newInstanceTodo.contents = val!;
       },
-      hintText: "Hello",
-      // hintText: isAdd == true ? "" : newInstanceTodo.contents,
+      hintText: "",
       validator: (val) {},
     );
   }
