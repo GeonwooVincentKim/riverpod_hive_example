@@ -12,23 +12,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Todo> items = [];
-
   @override
   void initState() {
-    setState(() {
-      items = Provider.of<TodoRiverPod>(context, listen: false).todoList;
-      
-      for (int i = 0; i < items.length; i++) {
-        print("Get Items -> ${items[i].title}");
-      }
-    });
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final items = context.watch<TodoRiverPod>();
+  
     return Scaffold(
       body: Column(
         children: [
@@ -36,31 +28,31 @@ class _HomeState extends State<Home> {
             child: Card(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: items.length,
+                itemCount: items.todoList.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TodoTile(
-                      itemIndex: index,
-                      onChanged: (checked) {
-                        // setState(() {
-                        //   print(items[index]);
-                        //   // items[index].isDone = checked ?? false;
-                        // });
+                  // 
+                  if (Provider.of<TodoRiverPod>(context).todoList[index].isDone == false) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: TodoTile(
+                        itemIndex: index,
+                        onChanged: (checked) {
+                          items.todoList[index].isDone = checked!;
+                          Provider.of<TodoRiverPod>(context, listen: false).updateTodo(items.todoList[index]);
+                        },
+                        onDeleted: () {
+                          setState(() {
+                            items.todoList.removeAt(index);
+                            Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
+                          });
+                        },
+                        todo: items.todoList[index],
+                      ),
+                    );
+                  } else {
+                    Container();
+                  }
 
-                        // setState(() {
-                        //   Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(items[index].isDone);
-                        // });
-                      },
-                      onDeleted: () {
-                        setState(() {
-                          items.removeAt(index);
-                          Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
-                        });
-                      },
-                      todo: items[index],
-                    ),
-                  );
                 },
               ),
             )

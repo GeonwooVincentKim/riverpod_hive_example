@@ -12,18 +12,15 @@ class Complete extends StatefulWidget {
 }
 
 class _CompleteState extends State<Complete> {
-  List<Todo> completeItems = [];
-
   @override
   void initState() {
-    setState(() {
-      completeItems = Provider.of<TodoRiverPod>(context, listen: false).todoList;
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final completeItems = context.watch<TodoRiverPod>();
+
     return Scaffold(
       body: Column(
         children: [
@@ -31,24 +28,30 @@ class _CompleteState extends State<Complete> {
             child: Card(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: completeItems.length,
+                itemCount: completeItems.todoList.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TodoTile(
-                      itemIndex: index,
-                      onChanged: () {
-                        
-                      },
-                      onDeleted: () {
-                        setState(() {
-                          completeItems.removeAt(index);
-                          Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
-                        });
-                      },
-                      todo: completeItems[index],
-                    ),
-                  );
+                  if (Provider.of<TodoRiverPod>(context).todoList[index].isDone == true) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: TodoTile(
+                        itemIndex: index,
+                        onChanged: (checked) {
+                          completeItems.todoList[index].isDone = checked!;
+                          Provider.of<TodoRiverPod>(context, listen: false).updateTodo(completeItems.todoList[index]);
+                          // setState(() {
+                            
+                          // });
+                        },
+                        onDeleted: () {
+                          setState(() {
+                            completeItems.todoList.removeAt(index);
+                            Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
+                          });
+                        },
+                        todo: completeItems.todoList[index],
+                      ),
+                    );
+                  }
                 },
               ),
             )

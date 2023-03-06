@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class TodoTile extends StatefulWidget {
   final int itemIndex;
-  final Function onChanged;
+  final Function(bool?)? onChanged;
   final Function onDeleted;
   final Todo todo;
 
@@ -25,6 +25,11 @@ class TodoTile extends StatefulWidget {
 }
 
 class _TodoTileState extends State<TodoTile> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,13 +54,7 @@ class _TodoTileState extends State<TodoTile> {
               Checkbox(
                 key: widget.key,
                 value: widget.todo.isDone,
-                // onChanged: widget.onChanged(),
-                onChanged: (checked) {
-                  setState(() {
-                    widget.todo.isDone = checked ?? false;
-                    // Provider.of<TodoRiverPod>(context, listen: false).checkCompleted(widget.todo.isDone);
-                  });
-                },
+                onChanged: (val) => widget.onChanged!(val),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

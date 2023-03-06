@@ -64,19 +64,27 @@ class TodoRiverPod with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void checkCompleted(bool isDone) {
-    _selectedTodo.isDone = isDone;
+  // void checkCompleted(bool isDone) {
+  //   _selectedTodo.isDone = isDone;
+  //   notifyListeners();
+  // }
+
+  void checkCompleted(Todo selectTodo, bool isComplete) {
+    // final Todo todoCheckComplete = Todo.from(selectTodo);
+    _selectedTodo.isDone = isComplete;
+
+    // if (isComplete) {
+    //   _todoCompleteList.add(todoCheckComplete);
+    //   _todoList.remove(selectTodo);
+    // } else {
+    //   _todoList.add(todoCheckComplete);
+    //   _todoCompleteList.remove(selectTodo);
+    // }
+
+    // isComplete ? 
+    //   _todoCompleteList.add(todoCheckComplete) : 
+    //   _todoList.add(todoCheckComplete);
+    // _todoList.removeAt(index);
     notifyListeners();
   }
-
-  // void addTodo(Todo todo) {
-  //   // _todoItems.add(todo);
-  //   _todoList.add(todo);
-  //   notifyListeners();
-  // }
-
-  // void dropTodo(Todo todo) {
-  //   _todoItems.remove(todo);
-  //   notifyListeners();
-  // }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/item_spacing/item_spacing.dart';
 import 'package:flutter_todo_list/widget/custom/custom_row.dart';
 import 'package:flutter_todo_list/widget/form_Field/custom_text_form_field.dart';
+import 'package:flutter_todo_list/widget/list_view/custom_check_box.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -34,14 +35,14 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
     setState(() {
       newInstanceTodo = Todo(id: widget.getTodo.id, title: titleInput.text, contents: contentsInput.text, date: dateInput.text, isDone: false);
       // Hide all data before the user click the area of textfield
-      dateInput.text = "";
-      titleInput.text = "";
-      contentsInput.text = "";
+      // dateInput.text = "";
+      // titleInput.text = "";
+      // contentsInput.text = "";
 
       /// Show all data in edit page
-      // dateInput = TextEditingController(text: widget.getTodo.date);
-      // titleInput = TextEditingController(text: widget.getTodo.title);
-      // contentsInput = TextEditingController(text: widget.getTodo.contents);
+      dateInput = TextEditingController(text: widget.getTodo.date);
+      titleInput = TextEditingController(text: widget.getTodo.title);
+      contentsInput = TextEditingController(text: widget.getTodo.contents);
     });
     
     print("Get Widget ID -> ${widget.getTodo.id}");
@@ -163,19 +164,23 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
     );
   }
 
-  CheckboxListTile _buildCheckbox() {
-    return CheckboxListTile(
-      title: const Text("완료여부"),
-      value: _isChecked,
-      onChanged: (value) {
+  CustomCheckBox _buildCheckbox() {
+    return CustomCheckBox(
+      todo: widget.getTodo,
+      onChanged: (checked) {
         setState(() {
-          _isChecked = value!;
-          // newTodo['isDone'] = _isChecked;
-          newInstanceTodo.isDone = _isChecked;
+          widget.getTodo.isDone = checked!;
+          newInstanceTodo.isDone = checked;
         });
       },
     );
   }
+
+  // Checkbox _buildCheckbox(
+  //   return Checkbox(
+  //     key: widget.key
+  //   );
+  // )
 
   Future<DateTime?> customDatePicker(BuildContext context) {
     return showDatePicker(
@@ -191,6 +196,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
 
     _formKey.currentState!.save();
     Provider.of<TodoRiverPod>(context, listen: false).updateTodo(newInstanceTodo);
-    Navigator.pushNamed(context, "/");
+  
+    Navigator.pop(context);
   }
 }
