@@ -46,7 +46,7 @@ class _HomePage extends State<HomePage>{
              child:TextField(
                 controller: dateinput, //editing controller of this TextField
                 decoration: InputDecoration( 
-                  icon: Icon(Icons.calendar_today), //icon of text field
+                  // icon: Icon(Icons.calendar_today), //icon of text field
                   labelText: "Enter Date" //label text of field
                 ),
                 readOnly: true,  //set it true, so that user will not able to edit text
