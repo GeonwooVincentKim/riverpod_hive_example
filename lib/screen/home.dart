@@ -36,10 +36,10 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TodoTile(
                         itemIndex: index,
-                        onChanged: (checked) {
-                          items.todoList[index].isDone = checked!;
-                          Provider.of<TodoRiverPod>(context, listen: false).updateTodo(items.todoList[index]);
-                        },
+                        // onChanged: (checked) {
+                        //   items.todoList[index].isDone = checked!;
+                        //   Provider.of<TodoRiverPod>(context, listen: false).updateTodo(items.todoList[index]);
+                        // },
                         onDeleted: () {
                           setState(() {
                             items.todoList.removeAt(index);
