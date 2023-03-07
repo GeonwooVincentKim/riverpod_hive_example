@@ -77,7 +77,13 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                   child: Column(
-                    children: [
+                    children: widget.getTodo.isDone ? [
+                      _buildDate(context),
+                      const ListItemSpace(),
+                      _buildTitle(),
+                      const ListItemSpace(),
+                      _buildContents(),
+                    ] : [
                       _buildDate(context),
                       const ListItemSpace(),
                       _buildTitle(),
@@ -124,6 +130,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       validator: (val) {
         return null;
       },
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 
@@ -144,6 +151,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
         }
         return null;
       },
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 
@@ -161,6 +169,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       },
       hintText: widget.getTodo.contents,
       validator: (val) {},
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 

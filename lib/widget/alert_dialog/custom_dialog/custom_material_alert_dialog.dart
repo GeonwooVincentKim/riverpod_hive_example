@@ -128,6 +128,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       validator: (val) {
         return null;
       },
+      isEnabled: true,
     );
   }
 
@@ -148,6 +149,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
         }
         return null;
       },
+      isEnabled: true,
     );
   }
 
@@ -165,6 +167,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       },
       hintText: "",
       validator: (val) {},
+      isEnabled: true,
     );
   }
 
