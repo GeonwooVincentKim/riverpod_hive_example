@@ -37,10 +37,10 @@ class _CompleteState extends State<Complete> {
                         itemIndex: index,
                         onChanged: (checked) {
                           completeItems.todoList[index].isDone = checked!;
+                          // completeItems.todoCompleteList[index].isDone = checked;
+
                           Provider.of<TodoRiverPod>(context, listen: false).updateTodo(completeItems.todoList[index]);
-                          // setState(() {
-                            
-                          // });
+                          // Provider.of<TodoRiverPod>(context, listen: false).updateCompletTodo(completeItems.todoCompleteList[index]);
                         },
                         onDeleted: () {
                           setState(() {

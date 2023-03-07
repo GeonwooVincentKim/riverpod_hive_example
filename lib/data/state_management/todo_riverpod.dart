@@ -15,7 +15,12 @@ class TodoRiverPod with ChangeNotifier {
   List<Todo> get todoList => [..._todoList];
   List<Todo> get todoCompleteList => [..._todoCompleteList];
   // Todo? get selectedTodo => Todo.from(_selectedTodo);
-  Todo? get selectedTodo => _selectSingleTodo != null ? Todo.from(_selectSingleTodo) : null;
+  Todo? get selectedTodo => _selectedTodo != null ? Todo.from(_selectSingleTodo) : null;
+
+  void selectTodo(Todo todo) {
+    _selectSingleTodo = todo;
+    notifyListeners();
+  }
 
   void createTodo(Map<String, dynamic> menuCreate) {
     menuCreate['id'] = getRandomString(2);
@@ -35,6 +40,18 @@ class TodoRiverPod with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTodoMap(Map<String, dynamic> menuUpdate) {
+    final Todo getTodoMap = Todo.fromJSON(menuUpdate);
+    final int index = _todoList.indexWhere((element) => element.id == getTodoMap.id);
+
+    if (index >= 0) {
+      _selectSingleTodo = getTodoMap;
+      _todoList[index] = getTodoMap;
+    }
+
+    notifyListeners();
+  }
+
   void updateTodo(Todo updateTodo) {
     final Todo todoUpdateSets = Todo.from(updateTodo);
     final int index = _todoList.indexWhere((element) => element.id == todoUpdateSets.id);
@@ -44,11 +61,31 @@ class TodoRiverPod with ChangeNotifier {
 
 
     if (index >= 0) {
-      _selectedTodo = todoUpdateSets;
+      // _selectedTodo = todoUpdateSets;
       _todoList[index] = todoUpdateSets;
     }
 
     notifyListeners();
+  }
+
+  void updateCompletTodo(Todo completeTodo) {
+    final Todo todoCompleteUpdate = Todo.from(completeTodo);
+    final int index = _todoCompleteList.indexWhere((element) => element.id == todoCompleteUpdate.id);
+
+    print("Get Complete ID -> ${todoCompleteUpdate.id}");
+    print("Get Complete Index -> $index");
+
+    if (index >= 0) {
+      _todoCompleteList[index] = todoCompleteUpdate;
+    }
+
+    notifyListeners();
+  }
+
+  void checkCompletedTodo(Map<String, dynamic> completeTodo) {
+    final Todo getCompleteTodo = Todo.fromJSON(completeTodo);
+
+    
   }
 
   // void removeTodo()

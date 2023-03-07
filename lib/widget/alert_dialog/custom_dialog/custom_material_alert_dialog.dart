@@ -24,7 +24,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
 
   bool _isChecked = false;
   
-  List<Todo> items = [];
+  // List<Todo> items = [];
   // late Todo todoItem;
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> newTodo = {
@@ -46,7 +46,7 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     setState(() {
       // print(todoItem);
       // todoItem = Provider.of<TodoRiverPod>(context, listen: false).selectedTodo!;
-      items = Provider.of<TodoRiverPod>(context, listen: false).todoList;
+      // items = Provider.of<TodoRiverPod>(context, listen: false).todoList;
     });
 
     // if (todoItem == null) {
@@ -122,8 +122,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       },
       hintText: "",
       onSaved: (val) {
-        // newTodo['date'] = val;
-        newInstanceTodo.date = val!;
+        newTodo['date'] = val;
+        // newInstanceTodo.date = val!;
       },
       validator: (val) {
         return null;
@@ -138,8 +138,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       labelText: "제목을 입력하세요",
       onTap: () {},
       onSaved: (val) {
-        // newTodo['title'] = val;
-        newInstanceTodo.title = val!;
+        newTodo['title'] = val;
+        // newInstanceTodo.title = val!;
       },
       hintText: "",
       validator: (val) {
@@ -160,8 +160,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
       labelText: "내용을 입력하세요",
       onTap: () {},
       onSaved: (val) {
-        // newTodo['contents'] = val;
-        newInstanceTodo.contents = val!;
+        newTodo['contents'] = val;
+        // newInstanceTodo.contents = val!;
       },
       hintText: "",
       validator: (val) {},
@@ -181,8 +181,8 @@ class _CustomMaterialAlertDialogState extends State<CustomMaterialAlertDialog> {
     if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
-    Provider.of<TodoRiverPod>(context, listen: false).addTodo(newInstanceTodo);
-    // Provider.of<TodoRiverPod>(context, listen: false).createTodo(newTodo);
+    // Provider.of<TodoRiverPod>(context, listen: false).addTodo(newInstanceTodo);
+    Provider.of<TodoRiverPod>(context, listen: false).createTodo(newTodo);
     
     Navigator.pop(context);
   }

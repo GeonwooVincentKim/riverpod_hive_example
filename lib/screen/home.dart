@@ -30,15 +30,22 @@ class _HomeState extends State<Home> {
                 shrinkWrap: true,
                 itemCount: items.todoList.length,
                 itemBuilder: (context, index) {
-                  // 
                   if (Provider.of<TodoRiverPod>(context).todoList[index].isDone == false) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TodoTile(
                         itemIndex: index,
                         onChanged: (checked) {
+                          if (checked == false) {
+                            print(checked);
+                          } else {
+                            print(checked);
+                          }
                           items.todoList[index].isDone = checked!;
+                          
+                          // Provider.of<TodoRiverPod>(context, listen: false).updateTodoMap()
                           Provider.of<TodoRiverPod>(context, listen: false).updateTodo(items.todoList[index]);
+                          // Provider.of<TodoRiverPod>(context, listen: false).addTodo(items.todoCompleteList[index]);
                         },
                         onDeleted: () {
                           setState(() {
@@ -49,9 +56,34 @@ class _HomeState extends State<Home> {
                         todo: items.todoList[index],
                       ),
                     );
-                  } else {
-                    Container();
                   }
+                  // if (Provider.of<TodoRiverPod>(context).todoList[index].isDone == false) {
+                  //   return Padding(
+                  //     padding: const EdgeInsets.symmetric(vertical: 5),
+                  //     child: TodoTile(
+                  //       itemIndex: index,
+                  //       onChanged: (checked) {
+                  //         if (checked == false) {
+                  //           print(checked);
+                  //         } else {
+                  //           print(checked);
+                  //         }
+                  //         items.todoList[index].isDone = checked!;
+                          
+                  //         Provider.of<TodoRiverPod>(context, listen: false).updateTodo(items.todoList[index]);
+                  //       },
+                  //       onDeleted: () {
+                  //         setState(() {
+                  //           items.todoList.removeAt(index);
+                  //           Provider.of<TodoRiverPod>(context, listen: false).deleteTodo(index);
+                  //         });
+                  //       },
+                  //       todo: items.todoList[index],
+                  //     ),
+                  //   );
+                  // } else {
+                  //   Container();
+                  // }
 
                 },
               ),

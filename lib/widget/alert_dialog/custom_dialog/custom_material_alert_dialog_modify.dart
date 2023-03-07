@@ -28,12 +28,20 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
   bool _isChecked = false;
   
   final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> newTodo = {
+    'title': '',
+    'contents': '',
+    'date': '',
+    'isDone': false
+  };
+
   Todo newInstanceTodo = Todo(id: '', title: '', contents: '', date: '', isDone: false);
 
   @override
   void initState() {
     setState(() {
-      newInstanceTodo = Todo(id: widget.getTodo.id, title: titleInput.text, contents: contentsInput.text, date: dateInput.text, isDone: false);
+      final Todo? modifyInstanceTodo = Provider.of<TodoRiverPod>(context, listen: false).selectedTodo;
+      // newInstanceTodo = Todo(id: widget.getTodo.id, title: titleInput.text, contents: contentsInput.text, date: dateInput.text, isDone: false);
       // Hide all data before the user click the area of textfield
       // dateInput.text = "";
       // titleInput.text = "";
@@ -118,8 +126,8 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       },
       hintText: widget.getTodo.date,
       onSaved: (val) {
-        // newTodo['date'] = val;
-        newInstanceTodo.date = val!;
+        newTodo['date'] = val;
+        // newInstanceTodo.date = val!;
       },
       validator: (val) {
         return null;
@@ -134,8 +142,8 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       labelText: "제목을 입력하세요",
       onTap: () {},
       onSaved: (val) {
-        // newTodo['title'] = val;
-        newInstanceTodo.title = val!;
+        newTodo['title'] = val;
+        // newInstanceTodo.title = val!;
       },
       hintText: widget.getTodo.title,
       validator: (val) {
@@ -156,8 +164,8 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       labelText: "내용을 입력하세요",
       onTap: () {},
       onSaved: (val) {
-        // newTodo['contents'] = val;
-        newInstanceTodo.contents = val!;
+        newTodo['contents'] = val;
+        // newInstanceTodo.contents = val!;
       },
       hintText: widget.getTodo.contents,
       validator: (val) {},
@@ -165,13 +173,37 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
   }
 
   CustomCheckBox _buildCheckbox() {
+    print("Get Value (isDone) -> ${newInstanceTodo.isDone}");
+    print("Get Value (Widget) -> ${widget.getTodo.isDone}");
+
     return CustomCheckBox(
       todo: widget.getTodo,
       onChanged: (checked) {
-        setState(() {
-          widget.getTodo.isDone = checked!;
-          newInstanceTodo.isDone = checked;
-        });
+        print("Get Value -> $checked");
+        
+        widget.getTodo.isDone = checked!;
+        newTodo['isDone'] = checked;
+
+        // if (checked == true) {
+        //   print("is work (1) ?? -? ${widget.getTodo.isDone}");
+        //   print("is work (1-1) ?? -? ${checked}");
+
+        //   setState(() {
+        //     newInstanceTodo.isDone = checked!;
+        //   });
+        // } else {
+        //   print("is work (2) ?? -> ${widget.getTodo.isDone}");
+
+        //   setState(() {
+        //     widget.getTodo.isDone = checked!;
+        //     newInstanceTodo.isDone = checked;
+        //   });
+        // }
+        
+        // setState(() {
+        //   // widget.getTodo.isDone = checked!;
+        //   newInstanceTodo.isDone = checked!;
+        // });
       },
     );
   }
@@ -195,7 +227,12 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
     if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
-    Provider.of<TodoRiverPod>(context, listen: false).updateTodo(newInstanceTodo);
+    // if (widget.getTodo.isDone == true || newInstanceTodo.isDone == true) {
+      
+    // } else {
+    //   Provider.of<TodoRiverPod>(context, listen: false).updateTodo(newInstanceTodo);
+    // }
+    Provider.of<TodoRiverPod>(context, listen: false).updateTodoMap(newTodo);
   
     Navigator.pop(context);
   }
