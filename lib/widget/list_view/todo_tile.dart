@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_list/data/model/todo.dart';
 import 'package:flutter_todo_list/data/state_management/todo_riverpod.dart';
 import 'package:flutter_todo_list/screen/home.dart';
+import 'package:flutter_todo_list/shared/helpers/functions.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/custom_dialog/custom_material_alert_dialog.dart';
 import 'package:flutter_todo_list/widget/alert_dialog/custom_dialog/custom_material_alert_dialog_modify.dart';
 import 'package:provider/provider.dart';
@@ -58,9 +59,11 @@ class _TodoTileState extends State<TodoTile> {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: widget.todo.isDone ? [
                   Text(widget.todo.title),
-                  Text(widget.todo.date),
+                  Text(customDateFormat())
+                ] : [
+                  Text(widget.todo.title),
                 ]
               ),
               Container(
