@@ -14,3 +14,10 @@ String customDateFormat() {
   String formattedDate = DateFormat('yyyy-MM-dd hh:MM').format(now);
   return formattedDate;
 }
+
+String generalDateFormat() {
+  DateTime now = DateTime.now();
+
+  String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+  return formattedDate;
+}
