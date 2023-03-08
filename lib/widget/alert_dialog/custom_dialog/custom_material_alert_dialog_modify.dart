@@ -77,13 +77,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                   child: Column(
-                    children: widget.getTodo.isDone ? [
-                      _buildDate(context),
-                      const ListItemSpace(),
-                      _buildTitle(),
-                      const ListItemSpace(),
-                      _buildContents(),
-                    ] : [
+                    children: [
                       _buildDate(context),
                       const ListItemSpace(),
                       _buildTitle(),
