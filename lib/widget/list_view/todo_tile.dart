@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 
 class TodoTile extends StatefulWidget {
   final int itemIndex;
-  final Function(bool?)? onChanged;
+  // final Function(bool?)? onChanged;
   final Function onDeleted;
   final Todo todo;
 
   TodoTile({
     super.key,
     required this.itemIndex,
-    required this.onChanged,
+    // required this.onChanged,
     required this.onDeleted,
     required this.todo
   });
@@ -26,6 +26,8 @@ class TodoTile extends StatefulWidget {
 }
 
 class _TodoTileState extends State<TodoTile> {
+  bool checkBoxStatus = true;
+  
   @override
   void initState() {
     super.initState();
@@ -33,9 +35,12 @@ class _TodoTileState extends State<TodoTile> {
 
   @override
   Widget build(BuildContext context) {
+    checkBoxStatus = widget.todo.isDone;
+
     return GestureDetector(
       onTap:() {
         print("Get ID ?? -> ${widget.todo.id}");
+        print("box status -> $checkBoxStatus");
 
         showDialog(
           context: context,
@@ -52,10 +57,21 @@ class _TodoTileState extends State<TodoTile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
               Checkbox(
                 key: widget.key,
-                value: widget.todo.isDone,
-                onChanged: (val) => widget.onChanged!(val),
+                value: checkBoxStatus,
+                onChanged: (val) {
+              print("Value -> $checkBoxStatus");
+                  print("current val -> $val");
+                  checkBoxStatus = val!;
+                  // checkBoxStatus = widget.todo.isDone;
+
+                  print("widet ?? -> $checkBoxStatus");
+
+                  Provider.of<TodoRiverPod>(context, listen: false).updateTodo(widget.todo);
+                },
+                // onChanged: (val) => widget.onChanged!(val),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

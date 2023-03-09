@@ -42,10 +42,9 @@ class TodoRiverPod with ChangeNotifier {
     print("Get ID -> ${todoUpdateSets.id}");
     print("Get Index -> $index");
 
-
     // if (index >= 0) {
       // _selectedTodo = todoUpdateSets;
-    _todoList[index] = todoUpdateSets;
+     _todoList[index] = todoUpdateSets;
     // }
 
     notifyListeners();
@@ -57,6 +56,17 @@ class TodoRiverPod with ChangeNotifier {
     // _todoItems.removeAt(index);
     _todoList.removeAt(index);
     notifyListeners();
+  }
+
+  bool dataExistTodo(Todo getData) {
+    final Todo todoGetData = Todo.from(getData);
+    final int index = _todoList.indexWhere((element) => element.id == todoGetData.id);
+
+    if (index >= 0) {
+
+    }
+
+    return false;
   }
 
   // void deleteTodo(Map<String, dynamic> menuCreate) {

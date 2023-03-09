@@ -171,9 +171,16 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
     return CustomCheckBox(
       todo: widget.getTodo,
       onChanged: (checked) {
+        print("!!Current Type -> $checked");
+        print("Widget Type -> ${widget.getTodo.isDone}");
+
+
         setState(() {
           widget.getTodo.isDone = checked!;
-          newInstanceTodo.isDone = checked;
+          print("Widget Type -> ${widget.getTodo.isDone}");
+
+          newInstanceTodo.isDone = widget.getTodo.isDone;
+          print("Instance Type -> ${newInstanceTodo.isDone}");
         });
       },
     );

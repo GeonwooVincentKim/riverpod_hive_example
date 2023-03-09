@@ -35,13 +35,11 @@ class _CompleteState extends State<Complete> {
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TodoTile(
                         itemIndex: index,
-                        onChanged: (checked) {
-                          completeItems.todoList[index].isDone = checked!;
-                          Provider.of<TodoRiverPod>(context, listen: false).updateTodo(completeItems.todoList[index]);
-                          // setState(() {
-                            
-                          // });
-                        },
+                        // onChanged: (checked) {
+                        //   print("Checked Type -> $checked");
+                        //   completeItems.todoList[index].isDone = checked!;
+                        //   Provider.of<TodoRiverPod>(context, listen: false).updateTodo(completeItems.todoList[index]);
+                        // },
                         onDeleted: () {
                           setState(() {
                             completeItems.todoList.removeAt(index);
