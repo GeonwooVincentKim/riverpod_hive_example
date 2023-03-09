@@ -43,10 +43,10 @@ class TodoRiverPod with ChangeNotifier {
     print("Get Index -> $index");
 
 
-    if (index >= 0) {
-      _selectedTodo = todoUpdateSets;
-      _todoList[index] = todoUpdateSets;
-    }
+    // if (index >= 0) {
+      // _selectedTodo = todoUpdateSets;
+    _todoList[index] = todoUpdateSets;
+    // }
 
     notifyListeners();
   }
