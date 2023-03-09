@@ -42,11 +42,10 @@ class TodoRiverPod with ChangeNotifier {
     print("Get ID -> ${todoUpdateSets.id}");
     print("Get Index -> $index");
 
-
-    if (index >= 0) {
+    // if (index >= 0) {
       // _selectedTodo = todoUpdateSets;
-      _todoList[index] = todoUpdateSets;
-    }
+     _todoList[index] = todoUpdateSets;
+    // }
 
     notifyListeners();
   }

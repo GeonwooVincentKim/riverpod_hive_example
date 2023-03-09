@@ -124,6 +124,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       validator: (val) {
         return null;
       },
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 
@@ -144,6 +145,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
         }
         return null;
       },
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 
@@ -161,6 +163,7 @@ class _CustomMaterialAlertDialogModifyState extends State<CustomMaterialAlertDia
       },
       hintText: widget.getTodo.contents,
       validator: (val) {},
+      isEnabled: widget.getTodo.isDone == true ? false : true,
     );
   }
 

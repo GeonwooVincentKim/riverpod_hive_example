@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String?) onSaved;
   final String? Function(String?) validator;
   final String hintText;
+  final bool isEnabled;
 
   const CustomTextFormField({
     super.key, 
@@ -17,7 +18,8 @@ class CustomTextFormField extends StatelessWidget {
     required this.onTap,
     required this.onSaved,
     required this.validator,
-    required this.hintText
+    required this.hintText,
+    required this.isEnabled
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomTextFormField extends StatelessWidget {
             onTap: onTap,
             onSaved: onSaved,
             validator: validator,
+            enabled: isEnabled == true ? true : false,
           )
         )
       ],
