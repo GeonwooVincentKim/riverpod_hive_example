@@ -41,6 +41,12 @@ class CustomTextFormField extends StatelessWidget {
             onTap: onTap,
             onSaved: onSaved,
             validator: validator,
+            // If User trying to edit data in AlertDialog from Complete Tab,
+            // Block user cannot change any value if user doesn't change
+            // isComplete value
+            // 
+            // (if true, still in complete tab and cannot edit data)
+            // (otherwise, can modify data and isComplete value)
             enabled: isEnabled == true ? true : false,
           )
         )
